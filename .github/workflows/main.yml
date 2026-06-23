@@ -1,16 +1,10 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main, dev]
   pull_request:
-    branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [main, dev]
   workflow_dispatch:
 
 jobs:
@@ -18,75 +12,75 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.9]
+        python-version: ['3.13']
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install project
-        run: make install
+      - name: Sync dependencies
+        run: uv sync --extra test
       - name: Run linter
-        run: make lint
+        run: uv run make lint
 
   tests_linux:
     needs: linter
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.9]
+        python-version: ['3.13']
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install project
-        run: make install
+      - name: Sync dependencies
+        run: uv sync --extra test
       - name: Run tests
-        run: make test
-      - name: "Upload coverage to Codecov"
-        uses: codecov/codecov-action@v3
-        # with:
-        #   fail_ci_if_error: true
+        run: uv run pytest -v --cov-config .coveragerc --cov=rl_framework -l --tb=short --maxfail=1 tests/
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
 
   tests_mac:
     needs: linter
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.9]
+        python-version: ['3.13']
         os: [macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install project
-        run: make install
+      - name: Sync dependencies
+        run: uv sync --extra test
       - name: Run tests
-        run: make test
+        run: uv run pytest -v --cov-config .coveragerc --cov=rl_framework -l --tb=short --maxfail=1 tests/
 
   tests_win:
     needs: linter
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.9]
+        python-version: ['3.13']
         os: [windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Pip
-        run: pip install --user --upgrade pip
-      - name: Install project
-        run: pip install -e .[test]
-      - name: run tests
-        run: pytest -s -vvvv -l --tb=long tests
+      - name: Sync dependencies
+        run: uv sync --extra test
+      - name: Run tests
+        run: uv run pytest -s -vvvv -l --tb=long tests/
