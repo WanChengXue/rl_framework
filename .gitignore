@@ -145,3 +145,9 @@ dmypy.json
 
 # templates
 .github/templates/*
+
+# Learner (pending refactor — only base_server.py tracked)
+learner/log_server.py
+learner/config_server.py
+learner/data_server.py
+learner/learner_server.py
