@@ -43,7 +43,7 @@ jobs:
       - name: Sync dependencies
         run: uv sync --extra test
       - name: Run tests
-        run: uv run pytest -v --cov-config .coveragerc --cov=rl_framework -l --tb=short --maxfail=1 tests/
+        run: uv run pytest -v --cov=rl_framework -l --tb=short --maxfail=1 tests/
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
 
@@ -64,7 +64,7 @@ jobs:
       - name: Sync dependencies
         run: uv sync --extra test
       - name: Run tests
-        run: uv run pytest -v --cov-config .coveragerc --cov=rl_framework -l --tb=short --maxfail=1 tests/
+        run: uv run pytest -v --cov=rl_framework -l --tb=short --maxfail=1 tests/
 
   tests_win:
     needs: linter
