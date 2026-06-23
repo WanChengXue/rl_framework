@@ -1,0 +1,68 @@
+[project]
+name = "rl-framework"
+version = "0.1.0"
+description = "Awesome rl_framework created by WanChengXue"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "WanChengXue"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[project.optional-dependencies]
+test = [
+    "black",
+    "coverage",
+    "flake8",
+    "gitchangelog",
+    "isort",
+    "mkdocs",
+    "mypy",
+    "pytest",
+    "pytest-cov",
+]
+
+[project.scripts]
+rl_framework = "rl_framework.__main__:main"
+
+[project.urls]
+Source = "https://github.com/WanChengXue/rl_framework"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "rl_framework/VERSION"
+pattern = "(?P<version>.+)"
+
+[tool.hatch.build.targets.wheel]
+packages = ["rl_framework"]
+
+[tool.black]
+line-length = 79
+target-version = ['py39']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 79
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["rl_framework"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
