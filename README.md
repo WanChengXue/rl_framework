@@ -58,6 +58,15 @@ See also
 
 Awesome rl_framework created by WanChengXue
 
+This project is managed with [uv](https://docs.astral.sh/uv/), a fast Python package and project manager.
+
+## Install uv
+
+Follow the [uv installation guide](https://docs.astral.sh/uv/getting-started/installation/):
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
 ## Install it from PyPI
 
 ```bash
@@ -82,4 +91,23 @@ $ rl_framework
 
 ## Development
 
-Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+This project uses **uv** for all development tasks (virtualenv, dependency management, running, etc.).
+
+```bash
+# Create a virtual environment
+uv venv
+
+# Install the project in development mode
+uv pip install -e ".[test]"
+
+# Run tests
+uv run pytest -v tests/
+
+# Run the linter suite
+uv run make lint
+
+# Format code
+uv run make fmt
+```
+
+For the full development workflow, read [CONTRIBUTING.md](CONTRIBUTING.md).
