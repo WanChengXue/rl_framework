@@ -45,7 +45,7 @@ jobs:
       - name: Run tests
         run: uv run pytest -v --cov=rl_framework -l --tb=short --maxfail=1 tests/
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
 
   tests_mac:
     needs: linter
